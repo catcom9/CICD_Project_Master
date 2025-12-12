@@ -14,10 +14,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class LoginDetails {
     @NotBlank
-    @NotBlank @Size(min = 1, max = 20)
+    @Size(min = 1, max = 20)
     private String userName;
 
     @NotBlank
-    @NotBlank @Size(min = 1, max = 20)
+    @Size(min = 1, max = 20)
     private String password;
 }
