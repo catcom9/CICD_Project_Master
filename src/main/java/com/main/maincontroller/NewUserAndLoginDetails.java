@@ -12,11 +12,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class NewUserAndLoginDetails {
-    @NotBlank
-    @Size(min = 1, max = 20)
     private User user;
-
-    @NotBlank
-    @Size(min = 1, max = 20)
     private LoginDetails details;
 }

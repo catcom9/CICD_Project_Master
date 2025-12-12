@@ -1,6 +1,8 @@
 package com.main.maincontroller;
 
 import lombok.extern.java.Log;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -19,24 +21,22 @@ public class MainService {
         //Check Login details
         ResponseEntity<User> details = loginClient.getUser(currentUser.getUserName());
         if (!details.hasBody()){
-            //User not found, Do error stuff here
-            // TODO
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
         //Check Password
         if (!Objects.equals(details.getBody().getPassword(), currentUser.getPassword())){
-            // Passwords do not match, Do more error stuff here
-            // TODO
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
         //Check Permissions
         if(!Objects.equals(details.getBody().getRole(), "0")){
-            // Not an admin cant make new users, Do even more error stuff
-            // TODO
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
         loginClient.createUser(newUser);
 
-        return ResponseEntity.created();
+        return ResponseEntity.status(201).body(newUser);
     }
+
 }
