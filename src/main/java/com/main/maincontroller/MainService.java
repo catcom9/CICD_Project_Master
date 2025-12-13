@@ -17,20 +17,20 @@ public class MainService {
         this.loginClient = loginClient;
     }
 
-    public ResponseEntity<User> createUser(LoginDetails currentUser, User newUser) {
+    public ResponseEntity<User> createUser(LoginDetails details, User newUser) {
         //Check Login details
-        ResponseEntity<User> details = loginClient.getUser(currentUser.getUserName());
-        if (!details.hasBody()){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        ResponseEntity<User> userData = loginClient.getUser(details.getUserName());
+        if (!userData.hasBody()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         //Check Password
-        if (!Objects.equals(details.getBody().getPassword(), currentUser.getPassword())){
+        if (!Objects.equals(userData.getBody().getPassword(), details.getPassword())){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
         //Check Permissions
-        if(!Objects.equals(details.getBody().getRole(), "0")){
+        if(!Objects.equals(userData.getBody().getRole(), "0")){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
@@ -38,5 +38,22 @@ public class MainService {
 
         return ResponseEntity.status(201).body(newUser);
     }
+
+    public ResponseEntity<User> updateUserPassword(LoginDetails details, String newPass){
+        ResponseEntity<User> userData = loginClient.getUser(details.getUserName());
+        if (!userData.hasBody()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!Objects.equals(userData.getBody().getPassword(), details.getPassword())){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User newUser = new User(details.getUserName(), newPass, userData.getBody().getRole());
+
+        return loginClient.updateUser(details.getUserName(), newUser);
+
+    }
+
 
 }
