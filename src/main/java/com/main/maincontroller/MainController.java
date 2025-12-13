@@ -1,6 +1,7 @@
 package com.main.maincontroller;
 
 import jakarta.validation.Valid;
+import lombok.extern.java.Log;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class MainController {
         this.mainService = mainService;
     }
 
-    @PostMapping("/user")
+    @PostMapping("users/new")
     public ResponseEntity<User> createUser(@Valid @RequestBody NewUserAndLoginDetails details){
         User newUser = details.getUser();
         LoginDetails currentUser = details.getDetails();
@@ -22,10 +23,15 @@ public class MainController {
         return mainService.createUser(currentUser, newUser);
     }
 
-    @PutMapping("/{newPass}")
+    @PutMapping("users/update/{newPass}")
     public ResponseEntity<User> updateUserPassword(@Valid @RequestBody LoginDetails details, @PathVariable String newPass){
 
         return mainService.updateUserPassword(details, newPass);
+    }
+
+    @DeleteMapping("users/delete/{userName}")
+    public ResponseEntity<User> deleteUser(@Valid LoginDetails details, @PathVariable String userName){
+        return mainService.deleteUser(details, userName);
     }
 
 

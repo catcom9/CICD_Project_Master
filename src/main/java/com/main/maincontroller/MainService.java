@@ -56,4 +56,26 @@ public class MainService {
     }
 
 
+    public ResponseEntity<User> deleteUser(LoginDetails details, String userName){
+        //Check Login details
+        ResponseEntity<User> userData = loginClient.getUser(details.getUserName());
+        if (!userData.hasBody()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        //Check Password
+        if (!Objects.equals(userData.getBody().getPassword(), details.getPassword())){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        //Check Permissions
+        if(!Objects.equals(userData.getBody().getRole(), "0")){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return loginClient.deleteUser(userName);
+    }
+
+
+
 }
