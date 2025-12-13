@@ -2,9 +2,7 @@ package com.main.maincontroller;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class MainController {
@@ -23,4 +21,12 @@ public class MainController {
 
         return mainService.createUser(currentUser, newUser);
     }
+
+    @PutMapping("/{newPass}")
+    public ResponseEntity<User> updateUserPassword(@Valid @RequestBody LoginDetails details, @PathVariable String newPass){
+
+        return mainService.updateUserPassword(details, newPass);
+    }
+
+
 }
