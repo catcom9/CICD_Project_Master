@@ -1,5 +1,7 @@
-package com.main.maincontroller;
+package com.main.maincontroller.Micoservices;
 
+import com.main.maincontroller.Appointment;
+import com.main.maincontroller.AppointmentCreate;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

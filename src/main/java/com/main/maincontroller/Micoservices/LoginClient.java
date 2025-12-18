@@ -1,10 +1,9 @@
-package com.main.maincontroller;
+package com.main.maincontroller.Micoservices;
 
+import com.main.maincontroller.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @FeignClient(
         name = "loginMediflow",
