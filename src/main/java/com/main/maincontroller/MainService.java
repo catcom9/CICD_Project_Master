@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -112,12 +113,13 @@ public class MainService {
     }
 
 
+    public ResponseEntity<List<Appointment>> getAppByPatient(String userName) {
+        return appInterface.getByPatient(userName);
+    }
 
-
-
-
-
-
+    public ResponseEntity<List<Appointment>> getAppByDoctor(String userName) {
+        return appInterface.getByDoctor(userName);
+    }
 
 
 }

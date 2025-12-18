@@ -3,8 +3,11 @@ package com.main.maincontroller;
 import com.main.maincontroller.DTO.AppAndLoginDetails;
 import com.main.maincontroller.DTO.NewUserAndLoginDetails;
 import jakarta.validation.Valid;
+import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class MainController {
@@ -39,6 +42,17 @@ public class MainController {
     public  ResponseEntity<Appointment> createAppointment(@RequestBody @Valid AppAndLoginDetails newApp){
         return mainService.createAppointment(newApp);
     }
+
+    @GetMapping("appointments/patient/{userName}")
+    public ResponseEntity<List<Appointment>> getAppByPatient (@PathVariable String userName){
+        return mainService.getAppByPatient(userName);
+    }
+
+    @GetMapping("appointments/doctor/{userName}")
+    public ResponseEntity<List<Appointment>> getAppByDoctor (@PathVariable String userName){
+        return mainService.getAppByDoctor(userName);
+    }
+
 
 
 }
