@@ -1,7 +1,7 @@
-package com.main.maincontroller;
+package com.main.maincontroller.DTO;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import com.main.maincontroller.LoginDetails;
+import com.main.maincontroller.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

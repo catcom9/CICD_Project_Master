@@ -1,7 +1,8 @@
 package com.main.maincontroller;
 
-import lombok.extern.java.Log;
-import org.springframework.http.HttpHeaders;
+import com.main.maincontroller.DTO.AppAndLoginDetails;
+import com.main.maincontroller.Micoservices.AppointmentsInterface;
+import com.main.maincontroller.Micoservices.LoginClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,11 @@ public class MainService {
 
     private final LoginClient loginClient;
 
-    public MainService(LoginClient loginClient){
+    private final AppointmentsInterface appInterface;
+
+    public MainService(LoginClient loginClient, AppointmentsInterface appInterface){
         this.loginClient = loginClient;
+        this.appInterface = appInterface;
     }
 
     public ResponseEntity<User> createUser(LoginDetails details, User newUser) {
@@ -75,6 +79,44 @@ public class MainService {
 
         return loginClient.deleteUser(userName);
     }
+
+
+    public ResponseEntity<Appointment> createAppointment(AppAndLoginDetails newApp) {
+        ResponseEntity<User> userData = loginClient.getUser(newApp.getDetails().getUserName());
+        if (CheckLogin(newApp.getDetails()) != 0){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if(!Objects.equals(userData.getBody().getRole(), "1")){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return appInterface.createAppointment(newApp.getAppointment());
+    }
+
+
+    private int CheckLogin(LoginDetails details){
+        ResponseEntity<User> userData = loginClient.getUser(details.getUserName());
+
+        if (!userData.hasBody()){
+            return 1;
+        }
+
+        //Check Password
+        if (!Objects.equals(userData.getBody().getPassword(), details.getPassword())){
+            return 2;
+        }
+
+        return  0;
+
+    }
+
+
+
+
+
+
+
 
 
 

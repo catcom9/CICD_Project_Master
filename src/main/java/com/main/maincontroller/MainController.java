@@ -1,7 +1,8 @@
 package com.main.maincontroller;
 
+import com.main.maincontroller.DTO.AppAndLoginDetails;
+import com.main.maincontroller.DTO.NewUserAndLoginDetails;
 import jakarta.validation.Valid;
-import lombok.extern.java.Log;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,10 @@ public class MainController {
         return mainService.deleteUser(details, userName);
     }
 
-
+    @PostMapping("appointments/create/")
+    public  ResponseEntity<Appointment> createAppointment(@RequestBody @Valid AppAndLoginDetails newApp){
+        return mainService.createAppointment(newApp);
+    }
 
 
 }

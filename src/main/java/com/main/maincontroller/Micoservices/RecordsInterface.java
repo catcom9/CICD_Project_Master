@@ -1,5 +1,6 @@
-package com.main.maincontroller;
+package com.main.maincontroller.Micoservices;
 
+import com.main.maincontroller.Patient;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
