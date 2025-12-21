@@ -122,4 +122,16 @@ public class MainService {
     }
 
 
+    public ResponseEntity<Void> deleteAppByID(Long id, LoginDetails details) {
+        ResponseEntity<User> userData = loginClient.getUser(details.getUserName());
+        if (CheckLogin(details) != 0){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if(!Objects.equals(userData.getBody().getRole(), "1")){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        
+        return appInterface.deleteAppointment(id);
+    }
 }

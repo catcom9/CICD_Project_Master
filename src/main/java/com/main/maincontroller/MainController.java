@@ -53,6 +53,9 @@ public class MainController {
         return mainService.getAppByDoctor(userName);
     }
 
-
+    @DeleteMapping("appointments/delete/{id}")
+    public ResponseEntity<Void> deleteAppByID(@PathVariable Long id, @RequestBody LoginDetails details){
+        return mainService.deleteAppByID(id, details);
+    }
 
 }
