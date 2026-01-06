@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(
         name = "recordsMediflow",
-        url = "localhost:8082"
+        url = "${records.base-url}"
 )
 
 public interface RecordsInterface {

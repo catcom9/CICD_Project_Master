@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @FeignClient(
         name = "loginMediflow",
-        url = "localhost:8081"
+        url = "${login.base-url}"
 )
 
 public interface LoginClient {

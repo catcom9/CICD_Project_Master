@@ -10,7 +10,7 @@ import java.util.List;
 
 @FeignClient(
         name = "AppointmentsMediflow",
-        url = "localhost:8083"
+        url = "${appointments.base-url}"
 )
 
 public interface AppointmentsInterface {
