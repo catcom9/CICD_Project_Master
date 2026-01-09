@@ -3,10 +3,7 @@ package com.main.maincontroller.Micoservices;
 import com.main.maincontroller.Patient;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(
         name = "recordsMediflow",
@@ -14,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 )
 
 public interface RecordsInterface {
-    @GetMapping("/api/Patients/")
+    @PostMapping("/api/Patients/")
     Patient create(@RequestBody Patient person);
 
     @GetMapping("/api/Patients/{user}")
