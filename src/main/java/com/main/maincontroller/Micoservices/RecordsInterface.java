@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 )
 
 public interface RecordsInterface {
-    @PostMapping("/api/Patients/")
+    @PostMapping("/api/Patients")
     Patient create(@RequestBody Patient person);
 
     @GetMapping("/api/Patients/{user}")
