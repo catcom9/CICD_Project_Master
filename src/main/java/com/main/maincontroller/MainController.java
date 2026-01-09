@@ -72,5 +72,9 @@ public class MainController {
         return mainService.getRecordByUsername(details);
     }
 
+    @DeleteMapping("records/{username}")
+    public ResponseEntity<Void> deleteRecordByUser(@PathVariable String username, @RequestBody LoginDetails details){
+        return mainService.deleteRecordByUser(username, details);
+    }
 
 }

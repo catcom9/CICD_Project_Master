@@ -21,6 +21,6 @@ public interface RecordsInterface {
     Patient byUsername(@Valid @PathVariable String user);
 
     @DeleteMapping("/api/Patients/{user}")
-    void delete(@Valid@PathVariable String user);
+    void delete(@Valid @PathVariable String user);
 
 }
