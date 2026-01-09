@@ -103,7 +103,7 @@ public class MainService {
     private int CheckLogin(LoginDetails details){
         ResponseEntity<User> userData = loginClient.getUser(details.getUserName());
 
-        if (!userData.hasBody()){
+        if (userData.getStatusCode() == HttpStatus.NOT_FOUND){
             return 1;
         }
 
@@ -166,5 +166,19 @@ public class MainService {
         }
 
         return ResponseEntity.ok(record);
+    }
+
+    public ResponseEntity<Void> deleteRecordByUser(String username, LoginDetails details) {
+        ResponseEntity<User> userData = loginClient.getUser(details.getUserName());
+        if (CheckLogin(details) != 0){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if(!Objects.equals(userData.getBody().getRole(), "1")){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        recordsInterface.delete(username);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
