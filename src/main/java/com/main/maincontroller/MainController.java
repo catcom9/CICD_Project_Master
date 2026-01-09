@@ -2,8 +2,10 @@ package com.main.maincontroller;
 
 import com.main.maincontroller.DTO.AppAndLoginDetails;
 import com.main.maincontroller.DTO.NewUserAndLoginDetails;
+import com.main.maincontroller.DTO.PatientAndLoginDetails;
 import jakarta.validation.Valid;
 import lombok.Getter;
+import lombok.extern.java.Log;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,5 +59,18 @@ public class MainController {
     public ResponseEntity<Void> deleteAppByID(@PathVariable Long id, @RequestBody LoginDetails details){
         return mainService.deleteAppByID(id, details);
     }
+
+    @PostMapping("records/create")
+    public ResponseEntity<Patient> createRecord(@RequestBody PatientAndLoginDetails details){
+        LoginDetails loginDetails = details.getDetails();
+        Patient record = details.getPatient();
+        return mainService.createRecord(loginDetails, record);
+    }
+
+    @GetMapping("records")
+    public ResponseEntity<Patient> getByUsername(@RequestBody LoginDetails details){
+        return mainService.getRecordByUsername(details);
+    }
+
 
 }

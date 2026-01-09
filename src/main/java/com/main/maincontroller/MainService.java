@@ -3,6 +3,7 @@ package com.main.maincontroller;
 import com.main.maincontroller.DTO.AppAndLoginDetails;
 import com.main.maincontroller.Micoservices.AppointmentsInterface;
 import com.main.maincontroller.Micoservices.LoginClient;
+import com.main.maincontroller.Micoservices.RecordsInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,12 @@ public class MainService {
 
     private final AppointmentsInterface appInterface;
 
-    public MainService(LoginClient loginClient, AppointmentsInterface appInterface){
+    private final RecordsInterface recordsInterface;
+
+    public MainService(LoginClient loginClient, AppointmentsInterface appInterface, RecordsInterface recordsInterface){
         this.loginClient = loginClient;
         this.appInterface = appInterface;
+        this.recordsInterface = recordsInterface;
     }
 
     public ResponseEntity<User> createUser(LoginDetails details, User newUser) {
@@ -133,5 +137,34 @@ public class MainService {
         }
         
         return appInterface.deleteAppointment(id);
+    }
+
+    public ResponseEntity<Patient> createRecord(LoginDetails loginDetails, Patient record) {
+        ResponseEntity<User> userData = loginClient.getUser(loginDetails.getUserName());
+        if (CheckLogin(loginDetails) != 0){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if(!Objects.equals(userData.getBody().getRole(), "1")){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return ResponseEntity.ok(recordsInterface.create(record));
+
+    }
+
+
+    public ResponseEntity<Patient> getRecordByUsername(LoginDetails details) {
+        ResponseEntity<User> userData = loginClient.getUser(details.getUserName());
+        if (CheckLogin(details) != 0){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Patient record = recordsInterface.byUsername(details.getUserName());
+        if(!Objects.equals(record.getUsername(), details.getUserName())){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return ResponseEntity.ok(record);
     }
 }
